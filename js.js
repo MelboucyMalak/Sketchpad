@@ -16,19 +16,21 @@ function generateGrid(resolution){
     div.innerHTML=""
     for(let i=1;i<=resolution;i++){
         const child=document.createElement("div")
+        child.classList.add("child")
         div.appendChild(child)
         child.style.display="flex"
         for(let j=1;j<=resolution;j++){
             const grandChild=document.createElement("div")
             child.appendChild(grandChild)
             grandChild.classList.add("pixel")
-            grandChild.style.border="2px solid black"
         }
     }
     const pixels=document.querySelectorAll(".pixel")
     pixels.forEach(pixel => {
         pixel.addEventListener("mouseover",(e)=>{
-            e.target.style.backgroundColor=`rgb(${rand()},${rand()},${rand()})`
+            let color=e.target.style.backgroundColor=`rgb(${rand()},${rand()},${rand()})`
+            e.target.style.backgroundColor=color
+            e.target.style.borderColor=color
         })
     });
 }
