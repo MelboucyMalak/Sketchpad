@@ -2,8 +2,17 @@ let resolution=16
 let mode='draw'
 let pixels=[]
 let color=""
+let isDrawing=false
 const div=document.querySelector(".container")
 generateGrid(16)
+
+div.addEventListener("mousedown", () => {
+    isDrawing = true;
+});
+
+div.addEventListener("mouseup", () => {
+    isDrawing = false;
+});
 
 function generateGrid(resolution){
     div.innerHTML=""
@@ -20,7 +29,8 @@ function generateGrid(resolution){
 
     pixels=document.querySelectorAll(".pixel")
     pixels.forEach(pixel => {
-        pixel.addEventListener("mouseover",(e)=>{
+        pixel.addEventListener("mousemove",(e)=>{
+            if(!isDrawing){return;}
             switch (mode){
                 case "rainbow":
                     color=`rgb(${rand()},${rand()},${rand()})`
