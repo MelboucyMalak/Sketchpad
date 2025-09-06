@@ -6,11 +6,11 @@ let isDrawing=false
 const div=document.querySelector(".container")
 generateGrid(16)
 
-div.addEventListener("mousedown", () => {
+div.addEventListener("pointerdown", () => {
     isDrawing = true;
 });
 
-div.addEventListener("mouseup", () => {
+div.addEventListener("pointerup", () => {
     isDrawing = false;
 });
 
@@ -29,7 +29,7 @@ function generateGrid(resolution){
 
     pixels=document.querySelectorAll(".pixel")
     pixels.forEach(pixel => {
-        pixel.addEventListener("mousemove",(e)=>{
+        pixel.addEventListener("pointermove",(e)=>{
             if(!isDrawing){return;}
             switch (mode){
                 case "rainbow":
