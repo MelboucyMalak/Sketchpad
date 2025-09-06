@@ -27,6 +27,32 @@ document.addEventListener("pointerleave", () => {
     isDrawing = false;
 });
 
+div.addEventListener('touchstart', e => {
+  e.preventDefault();
+  isDrawing = true;
+  paintAtTouch(e);
+});
+
+div.addEventListener('touchmove', e => {
+  e.preventDefault();
+  if (!isDrawing) return;
+  paintAtTouch(e);
+});
+
+div.addEventListener('touchend', e => {
+  e.preventDefault();
+  isDrawing = false;
+});
+
+function paintAtTouch(e) {
+  for (let touch of e.touches) {
+    const el = document.elementFromPoint(touch.clientX, touch.clientY);
+    if (el && el.classList.contains('pixel')) {
+      paintPixel(el);
+    }
+  }
+}
+
 
 function generateGrid(resolution){
     div.innerHTML=""
