@@ -40,11 +40,17 @@ function generateGrid(resolution){
             child.appendChild(grandChild)
             grandChild.classList.add("pixel")
             grandChild.setAttribute('draggable', 'false');
+
             grandChild.addEventListener("pointerdown", (e) => {
                 e.preventDefault();
                 isDrawing = true;
-                e.target.setPointerCapture(e.pointerId); 
                 paintPixel(e.target);  
+            });
+
+            grandChild.addEventListener("pointerenter", (e) => {
+                if (isDrawing) {
+                    paintPixel(e.target);
+                }
             });
 
         }
