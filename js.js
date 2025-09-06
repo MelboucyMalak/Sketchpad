@@ -4,32 +4,45 @@ let pixels=[]
 let color=""
 let isDrawing=false
 const div=document.querySelector(".container")
+div.setAttribute('draggable', 'false');
+
 generateGrid(16)
 
-div.addEventListener("pointerdown", () => {
+document.addEventListener("pointerdown", () => {
     isDrawing = true;
 });
 
-div.addEventListener("pointerup", () => {
+document.addEventListener("pointerup", () => {
     isDrawing = false;
 });
+
+document.addEventListener("pointercancel", () => {
+    isDrawing = false;
+});
+
+document.addEventListener("pointerleave", () => {
+    isDrawing = false;
+});
+
 
 function generateGrid(resolution){
     div.innerHTML=""
     for(let i=1;i<=resolution;i++){
         const child=document.createElement("div")
         child.classList.add("child")
+        child.setAttribute('draggable', 'false');
         div.appendChild(child)
         for(let j=1;j<=resolution;j++){
             const grandChild=document.createElement("div")
             child.appendChild(grandChild)
             grandChild.classList.add("pixel")
+            grandChild.setAttribute('draggable', 'false');
         }
     }
 
     pixels=document.querySelectorAll(".pixel")
     pixels.forEach(pixel => {
-        pixel.addEventListener("pointermove",(e)=>{
+        pixel.addEventListener("pointerenter",(e)=>{
             if(!isDrawing){return;}
             switch (mode){
                 case "rainbow":

@@ -41,6 +41,7 @@ button {
   box-shadow: 0  5px 5px rgba(7, 7, 7, 0.363),
               5px  5px 5px rgba(7, 7, 7, 0.363),
               -5px  5px 5px rgba(7, 7, 7, 0.363);
+  touch-action: none;
 
 }
 
@@ -52,4 +53,6 @@ button {
 
 .pixel {
   flex: 1;
+  user-select: none;
+  -webkit-user-drag: none;
 }
