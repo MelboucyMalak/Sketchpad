@@ -8,8 +8,11 @@ div.setAttribute('draggable', 'false');
 
 generateGrid(16)
 
-document.addEventListener("pointerdown", () => {
-    isDrawing = true;
+document.addEventListener("pointermove", (e) => {
+    if (!isDrawing) return;
+    if (e.target.classList.contains("pixel")) {
+        paintPixel(e.target)
+    }
 });
 
 document.addEventListener("pointerup", () => {
@@ -37,43 +40,49 @@ function generateGrid(resolution){
             child.appendChild(grandChild)
             grandChild.classList.add("pixel")
             grandChild.setAttribute('draggable', 'false');
+            grandChild.addEventListener("pointerdown", (e) => {
+                e.preventDefault();
+                isDrawing = true;
+                e.target.setPointerCapture(e.pointerId); 
+                paintPixel(e.target);  
+            });
+
         }
     }
 }
 
-document.addEventListener("pointermove", (e)=>{
-    if(!isDrawing) return;
-    if(e.target.classList.contains("pixel")){
-        switch (mode){
-            case "rainbow":
-                color=`rgb(${rand()},${rand()},${rand()})`
-                e.target.style.backgroundColor=color
-                break;
-            case "erase":
-                e.target.style.backgroundColor="white"
-                break;
-            case "darken":
-                color = window.getComputedStyle(e.target).backgroundColor;
-                if(color==="rgba(0, 0, 0, 0)"){color="rgb(255, 255, 255)"}
-                color = color.replace("rgb(", "").replace(")", "");
-                let parts = color.split(",");
+function paintPixel(pixel) {
+    switch (mode) {
+        case "rainbow":
+            color = `rgb(${rand()},${rand()},${rand()})`
+            pixel.style.backgroundColor = color
+            break;
+        case "erase":
+            pixel.style.backgroundColor = "white"
+            break;
+        case "darken":
+            color = window.getComputedStyle(pixel).backgroundColor;
+            if (color === "rgba(0, 0, 0, 0)") {
+                color = "rgb(255, 255, 255)"
+            }
+            color = color.replace("rgb(", "").replace(")", "");
+            let parts = color.split(",");
 
-                let r = Number(parts[0].trim());
-                let g = Number(parts[1].trim());
-                let b = Number(parts[2].trim());
+            let r = Number(parts[0].trim());
+            let g = Number(parts[1].trim());
+            let b = Number(parts[2].trim());
 
-                const newR = Math.max(0, Math.floor(r - r * 0.1));
-                const newG = Math.max(0, Math.floor(g - g * 0.1));
-                const newB = Math.max(0, Math.floor(b - b * 0.1));
+            const newR = Math.max(0, Math.floor(r - r * 0.1));
+            const newG = Math.max(0, Math.floor(g - g * 0.1));
+            const newB = Math.max(0, Math.floor(b - b * 0.1));
 
-                e.target.style.backgroundColor=`rgb(${newR}, ${newG}, ${newB})`;
-                break;
-            case "draw":
-                e.target.style.backgroundColor="black"
-                break;
-        }
+            pixel.style.backgroundColor = `rgb(${newR}, ${newG}, ${newB})`;
+            break;
+        case "draw":
+            pixel.style.backgroundColor = "black"
+            break;
     }
-})
+}
 
 
 const btnNew=document.querySelector("#new")
