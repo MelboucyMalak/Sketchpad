@@ -44,8 +44,12 @@ function generateGrid(resolution){
             grandChild.addEventListener("pointerdown", (e) => {
                 e.preventDefault();
                 isDrawing = true;
-                paintPixel(e.target);  
-            });
+
+                if (e.target.hasPointerCapture && e.target.hasPointerCapture(e.pointerId)) {
+                    e.target.releasePointerCapture(e.pointerId);
+                }
+                paintPixel(e.target);
+            });  
 
             grandChild.addEventListener("pointerenter", (e) => {
                 if (isDrawing) {
