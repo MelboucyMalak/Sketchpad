@@ -42,7 +42,7 @@ function generateGrid(resolution){
 
     pixels=document.querySelectorAll(".pixel")
     pixels.forEach(pixel => {
-        pixel.addEventListener("pointerenter",(e)=>{
+        pixel.addEventListener("pointermove",(e)=>{
             if(!isDrawing){return;}
             switch (mode){
                 case "rainbow":
@@ -106,11 +106,3 @@ btnEraseAll.addEventListener("click",()=> generateGrid(resolution))
 function rand(){
     return Math.floor(Math.random()*256+1)
 }
-
- 
-
- 
- 
-
- 
-
