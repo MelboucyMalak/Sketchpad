@@ -8,12 +8,12 @@ div.setAttribute('draggable', 'false');
 
 generateGrid(16)
 
-document.addEventListener("pointermove", (e) => {
+document.addEventListener("pointerenter", (e) => {
     if (!isDrawing) return;
     if (e.target.classList.contains("pixel")) {
         paintPixel(e.target)
     }
-});
+},true);
 
 document.addEventListener("pointerup", () => {
     isDrawing = false;
